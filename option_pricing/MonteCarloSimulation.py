@@ -90,3 +90,27 @@ class MonteCarloPricing(OptionPricingModel):
         plt.title(f'First {num_of_movements}/{self.N} Random Price Movements')
         plt.legend(loc='best')
         plt.show()
+
+    def get_calculation_steps(self):
+        """
+        Returns a dictionary containing input parameters, intermediate calculations, and final calculations.
+        """
+        steps = {
+            "Input Parameters": {
+                "Spot Price": self.S_0,
+                "Strike Price": self.K,
+                "Time to Maturity (days)": self.T * 365,
+                "Risk-free Rate": self.r,
+                "Volatility": self.sigma,
+                "Number of Simulations": self.N
+            },
+            "Intermediate Calculations": {
+                "Time Step (dt)": self.dt,
+                "Simulated Prices": self.simulation_results_S
+            },
+            "Final Calculations": {
+                "Call Option Price": self._calculate_call_option_price(),
+                "Put Option Price": self._calculate_put_option_price()
+            }
+        }
+        return steps
